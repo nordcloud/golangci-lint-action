@@ -168,7 +168,7 @@ async function runLint(lintPath: string, patchPath: string): Promise<void> {
   const startedAt = Date.now()
   try {
     const res = await execShellCommand(cmd, cmdArgs)
-    await writeFile(`${cmdArgs.cwd}/report.xml`, res.stdout)
+    await writeFile(`report.xml`, res.stdout)
     // printOutput(res)
     core.info(`golangci-lint found no issues`)
   } catch (exc) {

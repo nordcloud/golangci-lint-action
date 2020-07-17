@@ -7413,7 +7413,7 @@ function runLint(lintPath, patchPath) {
         const startedAt = Date.now();
         try {
             const res = yield execShellCommand(cmd, cmdArgs);
-            yield writeFile(`${cmdArgs.cwd}/report.xml`, res.stdout);
+            yield writeFile(`report.xml`, res.stdout);
             // printOutput(res)
             core.info(`golangci-lint found no issues`);
         }
