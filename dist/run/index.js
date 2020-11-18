@@ -6813,10 +6813,10 @@ function runLint(lintPath, patchPath) {
             .forEach((arg) => {
             userArgNames.add(arg.replace(`-`, ``));
         });
-        if (userArgNames.has(`out-format`)) {
-            throw new Error(`please, don't change out-format for golangci-lint: it can be broken in a future`);
-        }
-        addedArgs.push(`--out-format=github-actions`);
+        // if (userArgNames.has(`out-format`)) {
+        //   throw new Error(`please, don't change out-format for golangci-lint: it can be broken in a future`)
+        // }
+        addedArgs.push(`--out-format=checkstyle`);
         if (patchPath) {
             if (userArgNames.has(`new`) || userArgNames.has(`new-from-rev`) || userArgNames.has(`new-from-patch`)) {
                 throw new Error(`please, don't specify manually --new* args when requesting only new issues`);
@@ -6846,7 +6846,8 @@ function runLint(lintPath, patchPath) {
         const startedAt = Date.now();
         try {
             const res = yield execShellCommand(cmd, cmdArgs);
-            printOutput(res);
+            yield writeFile(`report.xml`, res.stdout);
+            // printOutput(res)
             core.info(`golangci-lint found no issues`);
         }
         catch (exc) {
